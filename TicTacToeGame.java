@@ -290,30 +290,82 @@ public class TicTacToeGame {
     * been set
 	  */
 
-	// private longestSequence()
+	private void checkWinnerHorizontally(){
+		int counter = 1;
+
+		for(int i=0; i<lines*columns; i+=columns){
+			for(int j=i; j<i+columns-1; j++){
+				if(board[j]==board[j+1]){
+					counter++;
+					if(counter==sizeWin){
+						if (valueAt(j)==CellValue.X){
+							gameState = GameState.XWIN;
+							System.out.println("X WON!");
+							break;
+						} else if (valueAt(j)==CellValue.O){
+							gameState = GameState.OWIN;
+							System.out.println("O WON!");
+							break;
+						}
+					}
+				} else {
+					counter = 1;
+				}
+			}
+			if (gameState==GameState.XWIN || gameState==GameState.OWIN){
+				break;
+			}
+		}
+	}
+
+	private void checkWinnerVertically(){
+		int count = 1;
+
+		for (int i=0; i<columns; i++){
+			for(int j=i; j<=columns*(lines-2); j+=columns){
+				if(board[j]==board[j+columns]){
+					count+=1;
+					if(count==sizeWin){
+						if(valueAt(j)==CellValue.X){
+							gameState = GameState.XWIN;
+							System.out.println("X WON!");
+							break;
+						} else if (valueAt(j)==CellValue.O){
+							gameState = GameState.OWIN;
+							System.out.println("O WON!");
+							break;
+						}
+					}
+				}
+			}
+			if (gameState==GameState.XWIN || gameState==GameState.OWIN){
+				break;
+			}
+		}
+	}
 
 
 	private void setGameState(int i) {
 
 		// YOUR CODE HERE
-		boolean xWin=true, oWin=true, drawn=true;
-
+		checkWinnerHorizontally();
+		checkWinnerVertically();
 		//check vertical X
-		for(int v=0; v<lines; v++){
-			System.out.print("Ignore this"); //I got tired, this is where I stopped after the display method
-		}
+		// for(int v=0; v<lines; v++){
+			//System.out.print("Ignore this"); //I got tired, this is where I stopped after the display method
+		//}
 
 		// toughest method!!!
-		if (xWin){
-			gameState=GameState.PLAYING;
-		}else if (oWin){
-			gameState=GameState.OWIN;
+		// if (xWin){
+			//gameState=GameState.PLAYING;
+		//}else if (oWin){
+			//gameState=GameState.OWIN;
 
-		}else if (drawn){
-			gameState=GameState.DRAWN;
-		}else{
-			gameState=GameState.PLAYING;
-		}
+		//}else if (drawn){
+			//gameState=GameState.DRAWN;
+		//}else{
+			//gameState=GameState.PLAYING;
+		//}
 
 	}
 
