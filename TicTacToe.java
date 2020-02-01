@@ -55,24 +55,23 @@ public class TicTacToe{
         int inputNumber;
 
         //IMPORTANT **** SHOULD BE REPLACED WITH A GAMESTATE CONDTITION ****
-        for (int i=0; i<game.getLines()*game.getColumns();i++){
+        for (int i=0; i<=game.getLines()*game.getColumns();i++){
 
-          System.out.println(game.toString());
-          CellValue x=game.nextCellValue();
-          System.out.println(x);
+          System.out.print(game.toString());
 
-          //TO FIX
-          switch(x){
-            case X:
-              System.out.println("X to play:");
+          switch(i%2){
+            case 0:
+              System.out.print("X to play:");
               break;
-            case O:
-              System.out.println("X to play:");
+            case 1:
+              System.out.print("O to play:");
+              break;
+            default:
+              System.out.print("Something's wrong I can feel it");
               break;
           }
-          //The above code is in need of repair*********
-
           inputNumber=Integer.parseInt(System.console().readLine());
+          game.play(inputNumber);
         }
 
     }
