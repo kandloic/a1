@@ -19,12 +19,12 @@ public class TicTacToeGame {
 	* level records the number of rounds that have been
 	* played so far.
 	*/
-	private int level;
+	private int level = 0;
 
    /**
 	* gameState records the current state of the game.
 	*/
-	private GameState gameState;
+	private GameState gameState = GameState.PLAYING;
 
 
    /**
@@ -193,7 +193,7 @@ public class TicTacToeGame {
 	public CellValue nextCellValue(){
 
 		// YOUR CODE HERE -- Not Sure
-		if(numberOfXs+numberOfOs==0){
+		/*if(numberOfXs+numberOfOs==0){
 			numberOfXs++;
 			return CellValue.X;
 		} else {
@@ -204,6 +204,11 @@ public class TicTacToeGame {
 				numberOfXs++;
 				return CellValue.X;
 			}
+		}*/
+		if(level%2==1){
+			return CellValue.O;
+		} else {
+			return CellValue.X;
 		}
 	}
 
@@ -248,7 +253,6 @@ public class TicTacToeGame {
   	*/
 	public void play(int i) {
 
-
 		// YOUR CODE HERE
 		CellValue nextPlayer = nextCellValue();
 		// next variable is set to true if board was updated and false if not
@@ -268,7 +272,9 @@ public class TicTacToeGame {
 		if(updated){
 			// method is still under construction...
 			setGameState(i);
+			level++;
 		}
+		
 
 	}
 
@@ -350,6 +356,11 @@ public class TicTacToeGame {
 		// YOUR CODE HERE
 		checkWinnerHorizontally();
 		checkWinnerVertically();
+		if (gameState!=GameState.XWIN || gameState!=GameState.OWIN){
+			if(level==board.length){
+				gameState = GameState.DRAW;
+			}
+		} 
 		//check vertical X
 		// for(int v=0; v<lines; v++){
 			//System.out.print("Ignore this"); //I got tired, this is where I stopped after the display method
