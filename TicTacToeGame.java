@@ -13,39 +13,39 @@ public class TicTacToeGame {
    /**
 	* The board of the game, stored as a one dimension array.
 	*/
-	CellValue[] board;
-
+	private CellValue[] board;
 
    /**
 	* level records the number of rounds that have been
-	* played so far. 
+	* played so far.
 	*/
-	int level;
+	private int level;
 
    /**
 	* gameState records the current state of the game.
 	*/
-	GameState gameState;
+	private GameState gameState;
 
 
    /**
 	* lines is the number of lines in the grid
 	*/
-	int lines;
+	private int lines;
 
    /**
 	* columns is the number of columns in the grid
 	*/
-	int columns;
+	private int columns;
 
 
    /**
 	* sizeWin is the number of cell of the same type
 	* that must be aligned to win the game
 	*/
-	int sizeWin;
+	private int sizeWin;
 
-
+	private int numberOfXs=0;
+	private int numberOfOs=0;
    /**
 	* default constructor, for a game of 3x3, which must
 	* align 3 cells
@@ -54,7 +54,7 @@ public class TicTacToeGame {
 
 		// YOUR CODE HERE
 		lines = 3;
-		columns = 3; 
+		columns = 3;
 		sizeWin = 3;
 
 		// I'm a bit hesitant on this one
@@ -62,6 +62,7 @@ public class TicTacToeGame {
 		for (int i=0; i<board.length; i++){
 			// initializing cells as empty
 			board[i] = CellValue.EMPTY;
+		}
 
 	}
 
@@ -77,7 +78,7 @@ public class TicTacToeGame {
 	public TicTacToeGame(int lines, int columns){
 
 		// YOUR CODE HERE
-		
+
 		this.lines = lines;
 		this.columns = columns;
 		sizeWin = 3;
@@ -93,7 +94,7 @@ public class TicTacToeGame {
 
    /**
 	* constructor allowing to specify the number of lines
-	* and the number of columns for the game, as well as 
+	* and the number of columns for the game, as well as
 	* the number of cells that must be aligned to win.
    	* @param lines
     *  the number of lines in the game
@@ -108,12 +109,13 @@ public class TicTacToeGame {
 		this.lines = lines;
 		this.columns = columns;
 		this.sizeWin = sizeWin;
-		
+
 		// I'm a bit hesitant on this one
 		board = new CellValue[lines*columns];
 		for (int i=0; i<board.length; i++){
 			// initializing cells as empty
 			board[i] = CellValue.EMPTY;
+		}
 	}
 
 
@@ -126,7 +128,7 @@ public class TicTacToeGame {
 	public int getLines(){
 
 		// YOUR CODE HERE
-		return this.lines; 
+		return this.lines;
 
 	}
 
@@ -138,7 +140,7 @@ public class TicTacToeGame {
 	public int getColumns(){
 
 		// YOUR CODE HERE
-		return this.columns; 
+		return this.columns;
 
 	}
 
@@ -150,7 +152,7 @@ public class TicTacToeGame {
 	public int getLevel(){
 
 		// YOUR CODE HERE
-		return this.level; 
+		return this.level;
 
 	}
 
@@ -162,7 +164,7 @@ public class TicTacToeGame {
 	public int getSizeWin(){
 
 		// YOUR CODE HERE
-		return this.sizeWin; 
+		return this.sizeWin;
 
 	}
 
@@ -174,44 +176,35 @@ public class TicTacToeGame {
 	public GameState getGameState(){
 
 		// YOUR CODE HERE
-		return gameState; 
+		return gameState;
 
 	}
 
    /**
 	* returns the cellValue that is expected next,
-	* in other word, which player (X or O) should 
+	* in other word, which player (X or O) should
 	* play next.
 	* This method does not modify the state of the
 	* game.
-	* @return 
+	* @return
     *  the value of the enum CellValue corresponding
     * to the next expected value.
   	*/
 	public CellValue nextCellValue(){
 
 		// YOUR CODE HERE -- Not Sure
-		int numberOfXs=0;
-		int numberOfOs=0;
-
-		if(board.length==0){
+		if(numberOfXs+numberOfOs==0){
+			numberOfXs++;
 			return CellValue.X;
 		} else {
-			for (int i; i<board.length; i++){
-				if(board[i]==CellValue.X){
-					numberOfXs++;
-				} else if(board[i]==CellValue.O){
-					numberOfOs++;
-				}
-			}
 			if(numberOfOs<numberOfXs){
+				numberOfOs++;
 				return CellValue.O;
 			} else {
+				numberOfXs++;
 				return CellValue.X;
 			}
 		}
-		 
-
 	}
 
    /**
@@ -221,11 +214,10 @@ public class TicTacToeGame {
 	* printed out. The behaviour is then unspecified
    	* @param i
     *  the index of the cell in the array board
-    * @return 
+    * @return
     *  the value at index i in the variable board.
   	*/
 	public CellValue valueAt(int i) {
-
 		// YOUR CODE HERE
 		if (i>=(lines*columns)){
 			System.out.println("ERROR! Index is invalid!");
@@ -248,17 +240,17 @@ public class TicTacToeGame {
 	* as the state of the game.
 	* To faciliate testing, is is acceptable to keep playing
 	* after a game is already won. If that is the case, the
-	* a message should be printed out and the move recorded. 
+	* a message should be printed out and the move recorded.
 	* the  winner of the game is the player who won first
    	* @param i
-    *  the index of the cell in the array board that has been 
+    *  the index of the cell in the array board that has been
     * selected by the next player
   	*/
 	public void play(int i) {
 
 
 		// YOUR CODE HERE
-		nextPlayer = nextCellValue();
+		CellValue nextPlayer = nextCellValue();
 		// next variable is set to true if board was updated and false if not
 		boolean updated = false;
 
@@ -272,12 +264,12 @@ public class TicTacToeGame {
 			board[i] = nextPlayer;
 			updated = true;
 		}
-		
+
 		if(updated){
 			// method is still under construction...
 			setGameState(i);
 		}
-	
+
 	}
 
 
@@ -289,23 +281,39 @@ public class TicTacToeGame {
 	* at index i, the gameState variable was correctly set.
 	* it also assumes that it is only called if the game was
 	* not already finished when the cell at index i was played
-	* (i.e. the game was playing). Therefore, it only needs to 
+	* (i.e. the game was playing). Therefore, it only needs to
 	* check if playing at index i has concluded the game, and if
 	* set the oucome correctly
-	* 
+	*
    	* @param i
-    *  the index of the cell in the array board that has just 
+    *  the index of the cell in the array board that has just
     * been set
 	  */
-	  
+
 	// private longestSequence()
 
 
 	private void setGameState(int i) {
 
 		// YOUR CODE HERE
-		
+		boolean xWin=true, oWin=true, drawn=true;
+
+		//check vertical X
+		for(int v=0; v<lines; v++){
+			System.out.print("Ignore this"); //I got tired, this is where I stopped after the display method
+		}
+
 		// toughest method!!!
+		if (xWin){
+			gameState=GameState.PLAYING;
+		}else if (oWin){
+			gameState=GameState.OWIN;
+
+		}else if (drawn){
+			gameState=GameState.DRAWN;
+		}else{
+			gameState=GameState.PLAYING;
+		}
 
 	}
 
@@ -314,16 +322,45 @@ public class TicTacToeGame {
    /**
 	* Returns a String representation of the game matching
 	* the example provided in the assignment's description
-	* 
+	*
    	* @return
     *  String representation of the game
   	*/
 
 	public String toString(){
-
+		String str="";
 		// YOUR CODE HERE
-
-
+		for (int l=0; l<lines; l++){
+			for (int c=0; c<columns; c++){
+				switch(board[l*columns+c]){
+					case O:
+						str+=" O ";
+						break;
+					case X:
+						str+=" X ";
+						break;
+					case EMPTY:
+						str+="   ";
+						break;
+					default:
+				  	str+="def";
+						break;
+				}
+				if (((c+1)%columns!=0)){
+					str+="|";
+				}else{
+					str+="\n";
+				}
+			}
+			if (l<lines-1){
+				str+="---";
+				for (int i=0; i<columns-1; i++){
+					str+="----";
+				}
+			}
+			str+="\n";
+		}
+		return str;
 	}
 
 }
