@@ -52,7 +52,28 @@ public class TicTacToe{
         game = new TicTacToeGame(lines, columns, win);
 
         // YOUR CODE HERE
-        System.out.println(game.toString());
+        int inputNumber;
+
+        //IMPORTANT **** SHOULD BE REPLACED WITH A GAMESTATE CONDTITION ****
+        for (int i=0; i<game.getLines()*game.getColumns();i++){
+
+          System.out.println(game.toString());
+          CellValue x=game.nextCellValue();
+          System.out.println(x);
+
+          //TO FIX
+          switch(x){
+            case X:
+              System.out.println("X to play:");
+              break;
+            case O:
+              System.out.println("X to play:");
+              break;
+          }
+          //The above code is in need of repair*********
+
+          inputNumber=Integer.parseInt(System.console().readLine());
+        }
 
     }
 
