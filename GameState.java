@@ -7,7 +7,7 @@
  */
 
 enum GameState{
-	PLAYING, DRAWN, XWIN, OWIN
+	PLAYING, DRAW, XWIN, OWIN
 
 	// YOUR CODE HERE
 	
