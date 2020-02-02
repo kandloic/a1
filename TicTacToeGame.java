@@ -352,12 +352,91 @@ public class TicTacToeGame {
 		}
 	}
 
+	private void checkWinnerDiagonal(){
+		int count = 1;
+
+		for (int i=0; i<=(lines-sizeWin)*columns; i+=columns){
+			for (int j=i; j<i+(columns-sizeWin)+1; j++){
+			  for(int k=j; k<j+(columns+1)*(sizeWin-1); k+=columns+1){
+				  // System.out.print(k+" ");
+				if(board[k]==board[k+columns+1]){
+					count++;
+					if(count==sizeWin){
+						if(valueAt(k)==CellValue.X && level%2==0){
+							gameState = GameState.XWIN;
+							// System.out.println("X WON!");
+							break;
+						} else if (valueAt(k)==CellValue.O && level%2==1){
+							gameState = GameState.OWIN;
+							// System.out.println("O WON!");
+							break;
+						}
+					}
+				} else {
+					count=1;
+				}
+			  }
+			  // System.out.println("***********");
+			  if(gameState==GameState.XWIN || gameState==GameState.OWIN){
+				break;
+			}
+			}
+			// System.out.println("------------");
+			if(gameState==GameState.XWIN || gameState==GameState.OWIN){
+				break;
+			}
+			
+		  }
+		// System.out.println("Fin diagonale");
+	}
+
+
+	private void checkWinnerCounterDiagonal(){
+		int count = 1;
+
+		for (int i=columns-1; i<=(lines-sizeWin)*columns+columns-1; i+=columns){
+			for (int j=i; j>i-(columns-sizeWin)-1; j--){
+			  for(int k=j; k<j+(columns-1)*(sizeWin-1); k+=columns-1){
+				  // System.out.print(k+" ");
+				if(board[k]==board[k+columns-1]){
+					count++;
+					if(count==sizeWin){
+						if(valueAt(k)==CellValue.X && level%2==0){
+							gameState = GameState.XWIN;
+							// System.out.println("X WON!");
+							break;
+						} else if (valueAt(k)==CellValue.O && level%2==1){
+							gameState = GameState.OWIN;
+							// System.out.println("O WON!");
+							break;
+						}
+					}
+				} else {
+					count=1;
+				}
+			  }
+			  // System.out.println("***********");
+			  if(gameState==GameState.XWIN || gameState==GameState.OWIN){
+				break;
+			}
+			}
+			// System.out.println("------------");
+			if(gameState==GameState.XWIN || gameState==GameState.OWIN){
+				break;
+			}
+			
+		  }
+		// System.out.println("Fin diagonale");
+	}
+
 
 	private void setGameState(int i) {
 
 		// YOUR CODE HERE
 		checkWinnerHorizontally();
 		checkWinnerVertically();
+		checkWinnerDiagonal();
+		checkWinnerCounterDiagonal();
 		if (gameState!=GameState.XWIN || gameState!=GameState.OWIN){
 			if(level==board.length){
 				gameState = GameState.DRAW;
