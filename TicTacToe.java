@@ -54,11 +54,13 @@ public class TicTacToe{
         // YOUR CODE HERE
         int inputNumber;
 
-        //IMPORTANT **** SHOULD BE REPLACED WITH A GAMESTATE CONDTITION ****
+        //Play the game so long as the GameState of game is PLAYING
         while(game.getGameState()==GameState.PLAYING){
-
+          
+          //This prints the board in the console
           System.out.print(game.toString());
-
+          
+          //This switch asks for X or O to play depending on the turn
           switch(game.getLevel()%2){
             case 0:
               System.out.print("X to play:");
@@ -70,7 +72,11 @@ public class TicTacToe{
               System.out.print("Something's wrong I can feel it");
               break;
           }
+          //Gets the number from the console
           inputNumber=Integer.parseInt(System.console().readLine());
+          //Most important function
+          //play calls many functions internaly inside TicTacToeGame.java
+          //in order to enter the X or O at the appropriate place if valid.
           game.play(inputNumber);
         }
         System.out.print(game.toString());
