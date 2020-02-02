@@ -17,6 +17,8 @@ public class StudentInfo {
 
         System.out.println("************************************************************");
         System.out.println("* Jean Loic Kandikandi, 300113205, ITI1521A                *");
+        System.out.println("* Jean Loic Kandikandi, 300113205, ITI1521A                *");
+        System.out.println("* Nicholas Morin, 300109959, ITI1521A                      *");
         System.out.println("* Nicholas Morin, 300109959, ITI1521A                      *");
         System.out.println("************************************************************");
         System.out.println();
