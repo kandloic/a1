@@ -342,6 +342,8 @@ public class TicTacToeGame {
 							break;
 						}
 					}
+				} else {
+					count=1;
 				}
 			}
 			if (gameState==GameState.XWIN || gameState==GameState.OWIN){
