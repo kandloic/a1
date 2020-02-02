@@ -55,11 +55,11 @@ public class TicTacToe{
         int inputNumber;
 
         //IMPORTANT **** SHOULD BE REPLACED WITH A GAMESTATE CONDTITION ****
-        for (int i=0; i<=game.getLines()*game.getColumns();i++){
+        while(game.getGameState()==GameState.PLAYING){
 
           System.out.print(game.toString());
 
-          switch(i%2){
+          switch(game.getLevel()%2){
             case 0:
               System.out.print("X to play:");
               break;
