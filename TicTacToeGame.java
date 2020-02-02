@@ -44,8 +44,6 @@ public class TicTacToeGame {
 	*/
 	private int sizeWin;
 
-	private int numberOfXs=0;
-	private int numberOfOs=0;
    /**
 	* default constructor, for a game of 3x3, which must
 	* align 3 cells
@@ -57,7 +55,7 @@ public class TicTacToeGame {
 		columns = 3;
 		sizeWin = 3;
 
-		// I'm a bit hesitant on this one
+		//Set up a size 9 CellValue array to iterate through
 		board = new CellValue[9];
 		for (int i=0; i<board.length; i++){
 			// initializing cells as empty
@@ -83,7 +81,7 @@ public class TicTacToeGame {
 		this.columns = columns;
 		sizeWin = 3;
 
-		// I'm a bit hesitant on this one
+		//Set up a CellValue Array of appropriate size for a certain amount of lines and columns 
 		board = new CellValue[lines*columns];
 		for (int i=0; i<board.length; i++){
 			// initializing cells as empty
@@ -110,7 +108,7 @@ public class TicTacToeGame {
 		this.columns = columns;
 		this.sizeWin = sizeWin;
 
-		// I'm a bit hesitant on this one
+		//Set up a CellValue Array of appropriate size for a certain amount of lines and columns 
 		board = new CellValue[lines*columns];
 		for (int i=0; i<board.length; i++){
 			// initializing cells as empty
@@ -191,20 +189,7 @@ public class TicTacToeGame {
     * to the next expected value.
   	*/
 	public CellValue nextCellValue(){
-
-		// YOUR CODE HERE -- Not Sure
-		/*if(numberOfXs+numberOfOs==0){
-			numberOfXs++;
-			return CellValue.X;
-		} else {
-			if(numberOfOs<numberOfXs){
-				numberOfOs++;
-				return CellValue.O;
-			} else {
-				numberOfXs++;
-				return CellValue.X;
-			}
-		}*/
+		//dependent on the level, X or O will be the next to play
 		if(level%2==1){
 			return CellValue.O;
 		} else {
