@@ -286,14 +286,14 @@ public class TicTacToeGame {
 
 		for(int i=0; i<lines*columns; i+=columns){
 			for(int j=i; j<i+columns-1; j++){
-				if(board[j]==board[j+1]){
+				if(board[j]==board[j+1] && board[j]!=CellValue.EMPTY){
 					counter++;
 					if(counter==sizeWin){
-						if (valueAt(j)==CellValue.X){
+						if (valueAt(j)==CellValue.X && level%2==0){
 							gameState = GameState.XWIN;
 							System.out.println("X WON!");
 							break;
-						} else if (valueAt(j)==CellValue.O){
+						} else if (valueAt(j)==CellValue.O && level%2==1){
 							gameState = GameState.OWIN;
 							System.out.println("O WON!");
 							break;
@@ -313,15 +313,15 @@ public class TicTacToeGame {
 		int count = 1;
 
 		for (int i=0; i<columns; i++){
-			for(int j=i; j<=columns*(lines-2); j+=columns){
-				if(board[j]==board[j+columns]){
+			for(int j=i; j<=i+columns*(lines-2); j+=columns){
+				if(board[j]==board[j+columns] && board[j]!=CellValue.EMPTY){
 					count+=1;
 					if(count==sizeWin){
-						if(valueAt(j)==CellValue.X){
+						if(valueAt(j+columns)==CellValue.X && level%2==0){
 							gameState = GameState.XWIN;
 							System.out.println("X WON!");
 							break;
-						} else if (valueAt(j)==CellValue.O){
+						} else if (valueAt(j)==CellValue.O && level%2==1){
 							gameState = GameState.OWIN;
 							System.out.println("O WON!");
 							break;
@@ -344,7 +344,7 @@ public class TicTacToeGame {
 			for (int j=i; j<i+(columns-sizeWin)+1; j++){
 			  for(int k=j; k<j+(columns+1)*(sizeWin-1); k+=columns+1){
 				  // System.out.print(k+" ");
-				if(board[k]==board[k+columns+1]){
+				if(board[k]==board[k+columns+1] && board[k]!=CellValue.EMPTY){
 					count++;
 					if(count==sizeWin){
 						if(valueAt(k)==CellValue.X && level%2==0){
@@ -383,7 +383,7 @@ public class TicTacToeGame {
 			for (int j=i; j>i-(columns-sizeWin)-1; j--){
 			  for(int k=j; k<j+(columns-1)*(sizeWin-1); k+=columns-1){
 				  // System.out.print(k+" ");
-				if(board[k]==board[k+columns-1]){
+				if(board[k]==board[k+columns-1] &&board[k]!=CellValue.EMPTY){
 					count++;
 					if(count==sizeWin){
 						if(valueAt(k)==CellValue.X && level%2==0){
@@ -422,8 +422,8 @@ public class TicTacToeGame {
 		checkWinnerVertically();
 		checkWinnerDiagonal();
 		checkWinnerCounterDiagonal();
-		if (gameState!=GameState.XWIN || gameState!=GameState.OWIN){
-			if(level==board.length){
+		if (gameState!=GameState.XWIN && gameState!=GameState.OWIN){
+			if(level==board.length-1){
 				gameState = GameState.DRAW;
 			}
 		} 
