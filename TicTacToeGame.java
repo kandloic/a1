@@ -108,10 +108,11 @@ public class TicTacToeGame {
 		this.columns = columns;
 		this.sizeWin = sizeWin;
 
-		//Set up a CellValue Array of appropriate size for a certain amount of lines and columns 
+		// Set up a CellValue Array of appropriate size for a certain amount of lines and columns 
 		board = new CellValue[lines*columns];
+
+		// Initializing all cell values so that they're all empty when the game begins
 		for (int i=0; i<board.length; i++){
-			// initializing cells as empty
 			board[i] = CellValue.EMPTY;
 		}
 	}
@@ -254,8 +255,9 @@ public class TicTacToeGame {
 			updated = true;
 		}
 
+		// update the gameState only if the board was updated
+		// allows player to play again if they selected an invalid index
 		if(updated){
-			// method is still under construction...
 			setGameState(i);
 			level++;
 		}
@@ -264,26 +266,14 @@ public class TicTacToeGame {
 	}
 
 
-   /**
-	* A helper method which updates the gameState variable
-	* correctly after the cell at index i was just set in
-	* the method play(int i)
-	* The method assumes that prior to setting the cell
-	* at index i, the gameState variable was correctly set.
-	* it also assumes that it is only called if the game was
-	* not already finished when the cell at index i was played
-	* (i.e. the game was playing). Therefore, it only needs to
-	* check if playing at index i has concluded the game, and if
-	* set the oucome correctly
-	*
-   	* @param i
-    *  the index of the cell in the array board that has just
-    * been set
-	  */
-
 	private void checkWinnerHorizontally(){
-		int counter = 1;
-
+		int counter = 1; // variable that will help keep track of the number of consecutive X's and O's
+		
+		/* first loop will iterate through all the lines
+		 * second loop will iterate through each column in a given line
+		 * compare elements: if two are identical, update the count and check if it is equal to sizeWin
+		 * if so, then the player's cell in that index won! 
+		*/
 		for(int i=0; i<lines*columns; i+=columns){
 			for(int j=i; j<i+columns-1; j++){
 				if(board[j]==board[j+1] && board[j]!=CellValue.EMPTY){
@@ -303,15 +293,23 @@ public class TicTacToeGame {
 					counter = 1;
 				}
 			}
-			if (gameState==GameState.XWIN || gameState==GameState.OWIN){
+
+			// break out of the loop if there's a winner
+			if (gameState==GameState.XWIN || gameState==GameState.OWIN){ 
 				break;
 			}
 		}
 	}
-
+	// check all columns for winner
 	private void checkWinnerVertically(){
-		int count = 1;
+		int count = 1; // variable that will help keep track of the number of consecutive X's and O's
 
+
+		/* first loop will iterate through each column
+		 * second loop will iterate through each cell in the column
+		 * compare elements: if two are identical, update the count and check if it is equal to sizeWin
+		 * if so, then the player's cell in that index won! 
+		*/
 		for (int i=0; i<columns; i++){
 			for(int j=i; j<=i+columns*(lines-2); j+=columns){
 				if(board[j]==board[j+columns] && board[j]!=CellValue.EMPTY){
@@ -331,29 +329,35 @@ public class TicTacToeGame {
 					count=1;
 				}
 			}
+
+			// break out of the loop if there's a winner
 			if (gameState==GameState.XWIN || gameState==GameState.OWIN){
 				break;
 			}
 		}
 	}
 
+	// checks all diagonals for winner
 	private void checkWinnerDiagonal(){
 		int count = 1;
-
+		
+		/* first loop will iterate through each row
+		 * second loop will iterate through each cell in a given row from left to right
+		 * third loop will iterate through all cells that make a diagonal
+		 * compare elements: if two are identical, update the count and check if it is equal to sizeWin
+		 * if so, then the player's cell in that index won! 
+		*/
 		for (int i=0; i<=(lines-sizeWin)*columns; i+=columns){
 			for (int j=i; j<i+(columns-sizeWin)+1; j++){
 			  for(int k=j; k<j+(columns+1)*(sizeWin-1); k+=columns+1){
-				  // System.out.print(k+" ");
 				if(board[k]==board[k+columns+1] && board[k]!=CellValue.EMPTY){
 					count++;
 					if(count==sizeWin){
 						if(valueAt(k)==CellValue.X && level%2==0){
 							gameState = GameState.XWIN;
-							// System.out.println("X WON!");
 							break;
 						} else if (valueAt(k)==CellValue.O && level%2==1){
 							gameState = GameState.OWIN;
-							// System.out.println("O WON!");
 							break;
 						}
 					}
@@ -361,12 +365,13 @@ public class TicTacToeGame {
 					count=1;
 				}
 			  }
-			  // System.out.println("***********");
+
+			  // break out of the second loop if there's a winner
 			  if(gameState==GameState.XWIN || gameState==GameState.OWIN){
 				break;
 			}
 			}
-			// System.out.println("------------");
+			// break out of the main loop if there's a winner
 			if(gameState==GameState.XWIN || gameState==GameState.OWIN){
 				break;
 			}
@@ -379,20 +384,23 @@ public class TicTacToeGame {
 	private void checkWinnerCounterDiagonal(){
 		int count = 1;
 
+		/* first loop will iterate through each row
+		 * second loop will iterate through each cell in a given row from the right to the left
+		 * third loop will iterate through all cells that make a diagonal
+		 * compare elements: if two are identical, update the count and check if it is equal to sizeWin
+		 * if so, then the player's cell in that index won! 
+		*/
 		for (int i=columns-1; i<=(lines-sizeWin)*columns+columns-1; i+=columns){
 			for (int j=i; j>i-(columns-sizeWin)-1; j--){
 			  for(int k=j; k<j+(columns-1)*(sizeWin-1); k+=columns-1){
-				  // System.out.print(k+" ");
 				if(board[k]==board[k+columns-1] &&board[k]!=CellValue.EMPTY){
 					count++;
 					if(count==sizeWin){
 						if(valueAt(k)==CellValue.X && level%2==0){
 							gameState = GameState.XWIN;
-							// System.out.println("X WON!");
 							break;
 						} else if (valueAt(k)==CellValue.O && level%2==1){
 							gameState = GameState.OWIN;
-							// System.out.println("O WON!");
 							break;
 						}
 					}
@@ -400,49 +408,51 @@ public class TicTacToeGame {
 					count=1;
 				}
 			  }
-			  // System.out.println("***********");
+			  // break out of the second if a winner was found
 			  if(gameState==GameState.XWIN || gameState==GameState.OWIN){
 				break;
 			}
 			}
-			// System.out.println("------------");
+			// break out of the main loop if a winner was found
 			if(gameState==GameState.XWIN || gameState==GameState.OWIN){
 				break;
 			}
 			
 		  }
-		// System.out.println("Fin diagonale");
 	}
 
-
+	   /**
+	* A helper method which updates the gameState variable
+	* correctly after the cell at index i was just set in
+	* the method play(int i)
+	* The method assumes that prior to setting the cell
+	* at index i, the gameState variable was correctly set.
+	* it also assumes that it is only called if the game was
+	* not already finished when the cell at index i was played
+	* (i.e. the game was playing). Therefore, it only needs to
+	* check if playing at index i has concluded the game, and if
+	* set the oucome correctly
+	*
+   	* @param i
+    *  the index of the cell in the array board that has just
+    * been set
+	  */
 	private void setGameState(int i) {
 
 		// YOUR CODE HERE
+
+		// check all possible combinations if there is a winner
 		checkWinnerHorizontally();
 		checkWinnerVertically();
 		checkWinnerDiagonal();
 		checkWinnerCounterDiagonal();
+
+		// a draw will occur if no one won the game and the board is full
 		if (gameState!=GameState.XWIN && gameState!=GameState.OWIN){
 			if(level==board.length-1){
 				gameState = GameState.DRAW;
 			}
 		} 
-		//check vertical X
-		// for(int v=0; v<lines; v++){
-			//System.out.print("Ignore this"); //I got tired, this is where I stopped after the display method
-		//}
-
-		// toughest method!!!
-		// if (xWin){
-			//gameState=GameState.PLAYING;
-		//}else if (oWin){
-			//gameState=GameState.OWIN;
-
-		//}else if (drawn){
-			//gameState=GameState.DRAWN;
-		//}else{
-			//gameState=GameState.PLAYING;
-		//}
 
 	}
 

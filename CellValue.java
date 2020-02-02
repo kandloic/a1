@@ -9,5 +9,6 @@
 enum CellValue {
 
 	// YOUR CODE HERE
+	// Cell values that will be used in the TicTacToeGame
 	EMPTY, X, O 
 }
