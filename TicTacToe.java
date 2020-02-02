@@ -73,6 +73,13 @@ public class TicTacToe{
           inputNumber=Integer.parseInt(System.console().readLine());
           game.play(inputNumber);
         }
+        System.out.print(game.toString());
+
+        if(game.getGameState()==GameState.XWIN){
+          System.out.println("X WON!");
+        } else if(game.getGameState()==GameState.OWIN) {
+          System.out.println("O WON!");
+        }
 
     }
 
